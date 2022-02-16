@@ -52,15 +52,17 @@ pipeline {
        }
        
        stage("SSH Deployment To Kuberntes"){
-           steps{
-               
+           steps {
                sh "chmod +x changeTag.sh"
                sh "./changeTag.sh ${docker_tag}"
                
                sshagent(['mylaptop-ssh-access']) {
+                   
                     sh 'scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml hasan@192.168.178.21:home/hasan/'
+                   
                     script {
                         try{
+                            
                             sh "ssh hasan@192.168.178.21 kubectl apply -f ."
                         }
                         catch(error)
