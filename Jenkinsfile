@@ -58,34 +58,31 @@ pipeline {
                sh "./changeTag.sh ${docker_tag}"
            }
        }
-       /*
+       
        stage("SSH Deployment To AWS Kuberntes"){
            steps{
                
                sshagent(['aws-server']) {
-                    //sh 'scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml hasan@192.168.178.21:home/hasan/'
-                    sh 'scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml ubuntu@172.31.11.22:/home/ubuntu/k8s/'
+                    sh 'scp -o StrictHostKeyChecking=no k8s/services.yml k8s/deployment-node-app.yml ubuntu@172.31.11.22:/home/ubuntu/k8s/'
                     script {
                         try{
-                            //sh "ssh hasan@192.168.178.21 kubectl apply -f ."
-                            sh "ssh ubuntu@172.31.11.22 kubectl apply -f ."
+                            sh "ssh ubuntu@172.31.11.22 kubectl apply -f k8s/."
                         }
                         catch(error)
                         {
-                            //sh "ssh hasan@192.168.178.21 kubectl create -f ."
-                            sh "ssh ubuntu@172.31.11.22 kubectl apply -f ."
+                            sh "ssh ubuntu@172.31.11.22 kubectl apply -f k8s/."
                         }
                     }
                }
            }
        }
-       */
        
+       /*
        stage("SSH Deployment To Local Kuberntes"){
            steps{
                
               sshagent(['mylaptop-ssh-access']) {
-                    sh 'scp -o StrictHostKeyChecking=no services.yml node-app-pod.yml hasan@192.168.178.21:home/hasan/k8s/'
+                    sh 'scp -o StrictHostKeyChecking=no k8s/services.yml k8s/node-app-pod.yml hasan@192.168.178.21:home/hasan/k8s/'
                     script {
                         try{
                             sh "ssh hasan@192.168.178.21 kubectl apply -f ."
@@ -98,7 +95,7 @@ pipeline {
                }
            }
        }
-       
+       */
   }
   
 }
