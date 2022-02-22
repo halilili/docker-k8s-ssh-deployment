@@ -15,7 +15,8 @@ pipeline {
       stage ('SCM Clone')
         {
             steps{
-               git credentialsId: 'github-access', url: 'https://github.com/halilili/docker-k8s-ssh-deployment'
+                git credentialsId: 'github-access', 
+                url: 'https://github.com/halilili/kubernetes-ssh-deployment'
             }
         }
         
